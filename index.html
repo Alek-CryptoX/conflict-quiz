@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conflict Management Styles Assessment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#211b16;
+    --paper:#f4ece0;
+    --paper2:#eaddc9;
+    --line:#cbb89c;
+    --compete:#c2452d;
+    --collab:#3f7d5e;
+    --avoid:#6d6a8a;
+    --accom:#cf8a3c;
+    --comp:#4a6fa5;
+    --shadow:rgba(33,27,22,.16);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    background-image:radial-gradient(circle at 12% 18%, rgba(207,138,60,.10), transparent 42%),
+                     radial-gradient(circle at 88% 82%, rgba(63,125,94,.10), transparent 42%);
+    color:var(--ink);
+    font-family:'Spline Sans',sans-serif;
+    line-height:1.6;
+    min-height:100vh;
+    padding:clamp(1rem,4vw,3rem);
+  }
+  .wrap{max-width:760px;margin:0 auto}
+
+  header{text-align:center;margin-bottom:2.5rem}
+  .eyebrow{
+    font-family:'Spline Sans';font-size:.72rem;letter-spacing:.32em;
+    text-transform:uppercase;color:var(--accom);font-weight:600;margin-bottom:1rem;
+  }
+  h1{
+    font-family:'Fraunces',serif;font-weight:900;
+    font-size:clamp(2.2rem,7vw,3.6rem);line-height:1.02;letter-spacing:-.02em;
+  }
+  h1 em{font-style:italic;color:var(--compete)}
+  .lede{font-size:1.02rem;max-width:48ch;margin:1.3rem auto 0;color:#5a4d3f}
+
+  .card{
+    background:var(--paper2);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:clamp(1.4rem,4vw,2.4rem);
+    box-shadow:0 18px 40px -22px var(--shadow);
+  }
+  .intro p{margin-bottom:1rem;font-size:.96rem}
+  .intro p:last-of-type{margin-bottom:0}
+  .credit{font-size:.78rem;color:#8a7a64;font-style:italic;margin-top:1.4rem}
+
+  .btn{
+    font-family:'Spline Sans';font-weight:600;font-size:1rem;
+    background:var(--ink);color:var(--paper);border:none;cursor:pointer;
+    padding:.95rem 2.2rem;border-radius:999px;letter-spacing:.01em;
+    transition:transform .15s ease, box-shadow .2s ease;
+    box-shadow:0 10px 22px -10px var(--shadow);
+  }
+  .btn:hover{transform:translateY(-2px);box-shadow:0 16px 28px -12px var(--shadow)}
+  .btn:active{transform:translateY(0)}
+  .btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+  .btn[disabled]{opacity:.35;cursor:not-allowed;transform:none}
+  .center{text-align:center;margin-top:1.8rem}
+
+  /* progress */
+  .progress-bar{height:6px;background:var(--paper2);border-radius:999px;overflow:hidden;margin-bottom:.6rem;border:1px solid var(--line)}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--accom),var(--compete));width:0;transition:width .4s cubic-bezier(.4,0,.2,1)}
+  .progress-label{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#8a7a64;margin-bottom:1.6rem;font-weight:500}
+
+  .q-number{font-family:'Fraunces',serif;font-style:italic;font-size:1.1rem;color:var(--accom);margin-bottom:.5rem}
+  .q-text{font-family:'Fraunces',serif;font-size:clamp(1.3rem,4vw,1.7rem);font-weight:600;line-height:1.25;margin-bottom:2rem}
+
+  .scale{display:flex;flex-direction:column;gap:.6rem}
+  .scale-ends{display:flex;justify-content:space-between;font-size:.78rem;color:#8a7a64;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.2rem}
+  .opts{display:grid;grid-template-columns:repeat(5,1fr);gap:.55rem}
+  .opt{
+    aspect-ratio:1/1;border:1.5px solid var(--line);background:var(--paper);
+    border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-size:1.3rem;font-weight:600;color:var(--ink);
+    transition:all .14s ease;
+  }
+  .opt:hover{border-color:var(--ink);transform:translateY(-2px)}
+  .opt.sel{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+  .nav{display:flex;justify-content:space-between;margin-top:2rem;gap:1rem}
+
+  /* results */
+  .hero-style{text-align:center;margin-bottom:2rem}
+  .hero-style .label{font-size:.74rem;letter-spacing:.28em;text-transform:uppercase;color:#8a7a64;font-weight:600}
+  .hero-style .name{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(2.4rem,9vw,4rem);line-height:1.05;margin:.4rem 0}
+  .hero-style .blurb{max-width:46ch;margin:0 auto;color:#5a4d3f}
+
+  .bars{display:flex;flex-direction:column;gap:1rem;margin:2.2rem 0}
+  .bar-row{display:grid;grid-template-columns:130px 1fr 42px;align-items:center;gap:.8rem}
+  .bar-name{font-weight:600;font-size:.9rem}
+  .bar-track{height:14px;background:var(--paper);border:1px solid var(--line);border-radius:999px;overflow:hidden}
+  .bar-fill{height:100%;border-radius:999px;width:0;transition:width .9s cubic-bezier(.2,.7,.2,1)}
+  .bar-val{font-family:'Fraunces',serif;font-weight:600;text-align:right;font-size:.95rem}
+
+  .detail{border-top:1px solid var(--line);padding-top:1.6rem;margin-top:.5rem}
+  .detail h3{font-family:'Fraunces',serif;font-size:1.3rem;margin-bottom:.6rem}
+  .detail .when{font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accom);font-weight:600;margin:1.1rem 0 .5rem}
+  .detail ul{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+  .detail li{padding-left:1.4rem;position:relative;font-size:.95rem}
+  .detail li::before{content:"→";position:absolute;left:0;color:var(--accom)}
+
+  .note{font-size:.86rem;color:#5a4d3f;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:1rem 1.2rem;margin-top:1.6rem}
+
+  .hidden{display:none}
+  .fade{animation:fade .4s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  @media (max-width:480px){
+    .bar-row{grid-template-columns:90px 1fr 36px}
+    .opt{font-size:1.1rem}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- INTRO -->
+  <section id="intro" class="fade">
+    <header>
+      <div class="eyebrow">Dean of Students Office</div>
+      <h1>How do you handle <em>conflict?</em></h1>
+      <p class="lede">Fifteen questions to reveal which of the five conflict management styles you reach for most.</p>
+    </header>
+    <div class="card intro">
+      <p>There are five core conflict management styles: <strong>Competing, Collaborating, Avoiding, Accommodating,</strong> and <strong>Compromising.</strong> No style is better than another — each has pros and cons, and each can be useful depending on the situation.</p>
+      <p>This assessment helps you identify your typical response to conflict, so that in future conflicts you'll be aware of your instinctive reaction, its pros and cons, and the other styles you could draw on instead.</p>
+      <p>For each statement, choose how often it described you in the past 6 months, from <strong>1 (rarely)</strong> to <strong>5 (always)</strong>. Be honest — there are no right or wrong answers.</p>
+      <p class="credit">Adapted from the Thomas-Kilmann Model and Reginald (Reg) Adkins, Ph.D., Elemental Truths Blog.</p>
+    </div>
+    <div class="center">
+      <button class="btn" onclick="startQuiz()">Begin the assessment</button>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="hidden">
+    <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+    <div class="progress-label" id="plabel">Question 1 of 15</div>
+    <div class="card">
+      <div class="q-number" id="qnum">01</div>
+      <div class="q-text" id="qtext"></div>
+      <div class="scale">
+        <div class="scale-ends"><span>Rarely</span><span>Always</span></div>
+        <div class="opts" id="opts"></div>
+      </div>
+      <div class="nav">
+        <button class="btn ghost" id="backBtn" onclick="prev()">Back</button>
+        <button class="btn" id="nextBtn" onclick="next()" disabled>Next</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results" class="hidden">
+    <div class="card">
+      <div class="hero-style">
+        <div class="label">Your primary style</div>
+        <div class="name" id="topName"></div>
+        <p class="blurb" id="topBlurb"></p>
+      </div>
+      <div class="bars" id="bars"></div>
+      <div class="detail" id="detail"></div>
+      <div class="note">Remember: this reflects your instinct, not a verdict. The most effective people flex between styles depending on what the situation calls for.</div>
+    </div>
+    <div class="center">
+      <button class="btn ghost" onclick="restart()">Retake the assessment</button>
+    </div>
+  </section>
+
+</div>
+
+<script>
+const questions = [
+  {t:"If someone disagrees with me, I vigorously defend my side of the issue.", s:"competing"},
+  {t:"I go along with suggestions from peers, even if I don't agree with them.", s:"accommodating"},
+  {t:"I give-and-take so that an agreement can be reached.", s:"compromising"},
+  {t:"I keep my opinions to myself rather than openly disagree with people.", s:"avoiding"},
+  {t:"In disagreements or negotiations, I try to find the best possible solutions for both sides by sharing information.", s:"collaborating"},
+  {t:"I try to reach a middle ground in disputes with other people.", s:"compromising"},
+  {t:"I go along with the wishes of people who have different points of view than my own.", s:"accommodating"},
+  {t:"I refrain from openly debating issues where there is disagreement.", s:"avoiding"},
+  {t:"In negotiations, I hold on to my position rather than give in.", s:"competing"},
+  {t:"I try to solve conflicts by finding solutions that benefit both me and the other person.", s:"collaborating"},
+  {t:"I let peers have their way rather than jeopardize our relationship.", s:"accommodating"},
+  {t:"I try to win my position in a discussion.", s:"competing"},
+  {t:"I investigate conflicts with peers so that we can discover solutions that benefit both of us.", s:"collaborating"},
+  {t:"It is not worth the time and trouble discussing my differences of opinion with other people.", s:"avoiding"},
+  {t:"To reach an agreement, I give up some things in exchange for others.", s:"compromising"}
+];
+
+const styles = {
+  competing:{name:"Competing",color:"var(--compete)",
+    blurb:"You can be assertive and uncooperative, valuing your own goals and often seeing being right as more important than preserving the relationship.",
+    when:["A quick, decisive action is required, such as in an emergency.","You are certain you are correct, or that it's in the best interest of all parties involved."]},
+  collaborating:{name:"Collaborating",color:"var(--collab)",
+    blurb:"You combine assertiveness and cooperation to work with others toward solutions that benefit everyone, seeing conflict as a chance to improve relationships.",
+    when:["The concerns of everyone involved are of utmost importance.","There is a high degree of trust among everyone involved in the conflict."]},
+  avoiding:{name:"Avoiding",color:"var(--avoid)",
+    blurb:"You may step away from a situation to gain clarity — sometimes giving up goals or relationships to sidestep conflict. \"Perhaps if we don't bring it up, it will blow over.\"",
+    when:["You need time to think through the situation before resolving it.","The issue is so trivial there is no point putting time and energy into it."]},
+  accommodating:{name:"Accommodating",color:"var(--accom)",
+    blurb:"You may put the needs of others before your own, valuing relationships over your own goals — but you almost never leave a conflict fully satisfied.",
+    when:["The issue is trivial and the outcome really doesn't matter.","Harmony is more important than resolving the conflict.","It's important to let the other person learn from their own mistakes."]},
+  compromising:{name:"Compromising",color:"var(--comp)",
+    blurb:"You're willing to give up something to gain something in return — finding the middle ground between two positions.",
+    when:["The people in conflict are willing to be flexible.","The affected individuals will be satisfied with part of what they want.","As a back-up when a win-win collaboration isn't possible."]}
+};
+
+let current = 0;
+const answers = new Array(questions.length).fill(null);
+
+function startQuiz(){
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('quiz').classList.remove('hidden');
+  document.getElementById('quiz').classList.add('fade');
+  render();
+}
+
+function render(){
+  const q = questions[current];
+  document.getElementById('qnum').textContent = String(current+1).padStart(2,'0');
+  document.getElementById('qtext').textContent = q.t;
+  document.getElementById('plabel').textContent = `Question ${current+1} of ${questions.length}`;
+  document.getElementById('pfill').style.width = ((current)/questions.length*100)+'%';
+
+  const opts = document.getElementById('opts');
+  opts.innerHTML = '';
+  for(let i=1;i<=5;i++){
+    const d = document.createElement('div');
+    d.className = 'opt' + (answers[current]===i?' sel':'');
+    d.textContent = i;
+    d.onclick = ()=>select(i);
+    opts.appendChild(d);
+  }
+  document.getElementById('backBtn').style.visibility = current===0 ? 'hidden':'visible';
+  document.getElementById('nextBtn').disabled = answers[current]===null;
+  document.getElementById('nextBtn').textContent = current===questions.length-1 ? 'See my results':'Next';
+}
+
+function select(v){
+  answers[current]=v;
+  render();
+}
+
+function next(){
+  if(answers[current]===null) return;
+  if(current===questions.length-1){ showResults(); return; }
+  current++;
+  document.querySelector('#quiz .card').classList.remove('fade');
+  void document.querySelector('#quiz .card').offsetWidth;
+  document.querySelector('#quiz .card').classList.add('fade');
+  render();
+}
+function prev(){ if(current>0){ current--; render(); } }
+
+function showResults(){
+  const scores = {competing:0,collaborating:0,avoiding:0,accommodating:0,compromising:0};
+  questions.forEach((q,i)=>scores[q.s]+=answers[i]);
+
+  document.getElementById('quiz').classList.add('hidden');
+  const res = document.getElementById('results');
+  res.classList.remove('hidden');
+  res.classList.add('fade');
+
+  const order = Object.keys(scores).sort((a,b)=>scores[b]-scores[a]);
+  const top = order[0];
+  document.getElementById('topName').textContent = styles[top].name;
+  document.getElementById('topName').style.color = styles[top].color;
+  document.getElementById('topBlurb').textContent = styles[top].blurb;
+
+  const bars = document.getElementById('bars');
+  bars.innerHTML='';
+  order.forEach(k=>{
+    const pct = (scores[k]/15)*100;
+    const row = document.createElement('div');
+    row.className='bar-row';
+    row.innerHTML = `<div class="bar-name">${styles[k].name}</div>
+      <div class="bar-track"><div class="bar-fill" style="background:${styles[k].color}"></div></div>
+      <div class="bar-val">${scores[k]}</div>`;
+    bars.appendChild(row);
+    setTimeout(()=>{ row.querySelector('.bar-fill').style.width = pct+'%'; },80);
+  });
+
+  const d = styles[top];
+  document.getElementById('detail').innerHTML =
+    `<h3 style="color:${d.color}">When ${d.name.toLowerCase()} works best</h3>
+     <div class="when">Use this style when</div>
+     <ul>${d.when.map(w=>`<li>${w}</li>`).join('')}</ul>`;
+
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function restart(){
+  current=0;
+  answers.fill(null);
+  document.getElementById('results').classList.add('hidden');
+  document.getElementById('intro').classList.remove('hidden');
+  document.getElementById('intro').classList.add('fade');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
